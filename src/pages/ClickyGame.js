@@ -19,11 +19,9 @@ class ClickyGame extends Component {
     componentDidMount(){
         // setTimeout(this.createGameTiles, 5000);
         this.createGameTiles();
-        console.log("[DEBUG] Component did mount");
     }
 
     createGameTiles = () =>{
-        console.log("[DEBUG] Component did mount 2");
 
         let tiles = TileLoader.createTiles();
         this.setState({
@@ -38,6 +36,7 @@ class ClickyGame extends Component {
         clickHandler = {this.clickEvent}
         alt = {imageObject.name}
         key = {imageObject.id}
+        id = {imageObject.id}
         />;
 
     }
@@ -60,18 +59,86 @@ class ClickyGame extends Component {
         
     }
 
-    clickEvent = () =>{
-        console.log("[DEBUG] This is array BEFORE shuffle");
-        console.log(this.state.tileArray);
-        this.setState({
-            tileArray: this.randomizeArray(this.state.tileArray)
-        });
-        console.log("[DEBUG] This is array AFTER shuffle");
-        console.log(this.state.tileArray);
+    checkIfTrue = (tile) =>{
+        debugger
+        console.log(tile.wasClicked);
+        if(tile.wasClicked){
+            return true;
+        }else{
+            return false;
+        }
+    };
+   
+
+   
+ 
+
+    clickEvent = (event) =>{
+    console.log(this.state.tileArray);
+        const array = this.state.tileArray;
+        const tileId = event.target.id;
+        
+       const currentIndexOfClickedTile =  array.findIndex(x => x.id === tileId);
+       console.log(currentIndexOfClickedTile);
+//START OF INCORRECT BLOCK
+       if(array[currentIndexOfClickedTile].wasClicked){ //User was incorrect
+           if(this.state.currentScore >0){ //they have a point to lose, remove a point
+                this.setState({currentScore:this.state.currentScore -1,
+                userMessage : "Sorry that was incorrect, you lost a point"
+                });
+           }else{ //Score is zero, they don't have any more points to lose, they lost the game
+               //User lost the game
+               this.setState({
+                userMessage : "You lost the game, the game has been reset",
+                currentScore : 0
+                });
+               this.createGameTiles(); //Reset Data 
+           }
+
+// END OF INCORRECT BLOCK
+ 
+//START OF USER CORRECT BLOCK
+       }else{ //User was correct
+        array[currentIndexOfClickedTile].wasClicked = true;
+        //Check if they got some of the characters left
+        if(array.some((x) => x.wasClicked === false)){ //Checks if there are some tiles remaining
+            //They just won the round
+            this.setState({
+                tileArray:array,
+                currentScore: this.state.currentScore + 1 ,
+                userMessage : "Congrats you won that round!"
+
+        });        
+        }else{ //They won the game
+            console.log("YOU FUCKING WON!");
+            const newScore = this.state.currentScore +1;
+            if(this.state.highScore < newScore){ //Check if they have a new high score
+                this.setState({
+                    highScore : newScore, //Set a new high score
+                    userMessage : "A new high score, the game has been reset",
+                    currentScore : 0
+                });
+             }else{ // No new high score
+                this.setState({
+                    userMessage : "You Won, try to beat your high score, the game has been reset",
+                    currentScore : 0
+                });
+
+             }
+             this.createGameTiles(); //Reset Data  
+        }       
+    }
+//END OF USER CORRECT BLOCK
+            
+
+        
+        // this.setState({
+        //     tileArray: this.randomizeArray(this.state.tileArray)
+        // });
+       
     };
 
     render(){
-        // console.log("[DEBUG] Tile Array "+ this.state.tileArray[0].image);
         const { tileArray } = this.state;
         return tileArray.length ? (
             <div>

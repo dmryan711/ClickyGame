@@ -7,7 +7,8 @@ export default {
         tileArray[i] = {
             image:images[i].src,
             name: images[i].title,
-            id:images[i].id
+            id:images[i].id,
+            wasClicked: false
         }
     }
     return tileArray;
