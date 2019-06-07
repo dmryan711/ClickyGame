@@ -1,7 +1,16 @@
 .tileImage {
-    height:300px;
-    width:300px;
+    height:150px;
+    width:150px;
     border-style: solid;
     border-width: medium;
 
 }
+
+.zoom{
+    transition: transform .2s;
+}
+.zoom:hover {
+    transform: scale(1.2); /*(150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    /* z-index: 2; */
+    border: none;
+  }

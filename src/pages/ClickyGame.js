@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Tile from "../component/Tile/Tile";
 import TileLoader from "../util/TileLoader";
+import Nav from "../component/Nav/Nav";
+import Jumbo from "../component/Jumbotron/Jumbotron";
 
 class ClickyGame extends Component {
     constructor(props){
@@ -9,7 +11,7 @@ class ClickyGame extends Component {
             tileArray: [],
             highScore:0,
             currentScore:0,
-            userMessage: "Click any tile to begin playing."
+            userMessage: "Click any tile to begin playing. The goal is click a different tile each time!"
         };
 
     }
@@ -73,10 +75,20 @@ class ClickyGame extends Component {
         const { tileArray } = this.state;
         return tileArray.length ? (
             <div>
+            
+            <Nav/>
+            <Jumbo
+            message = {this.state.userMessage}
+            highScore = {this.state.highScore}
+            currentScore = {this.state.currentScore}
+            />
+
             {this.createTileComponents(tileArray)}
             </div>
             
-        ) : (<h1>Loading...</h1>);
+        ) : (
+        
+        <h1>Loading...</h1>);
       
 
 
