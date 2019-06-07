@@ -1,5 +1,5 @@
 const imageGallery = [
-    {id:"1", src:'/images/Mario.jpg', title:'Mario'},
+    {id:"1", src:'./images/Mario.jpg', title:'Mario'},
     {id:"2", src:'/images/Bowser.jpg', title:'Bowser'},
     {id:"3", src:'/images/BowserJR.jpg', title:'Bowser Jr.'},
     {id:"4", src:'/images/DK.jpg', title:'Donkey Kong'},
