@@ -59,27 +59,12 @@ class ClickyGame extends Component {
         
     }
 
-    checkIfTrue = (tile) =>{
-        debugger
-        console.log(tile.wasClicked);
-        if(tile.wasClicked){
-            return true;
-        }else{
-            return false;
-        }
-    };
    
-
-   
- 
-
     clickEvent = (event) =>{
-    console.log(this.state.tileArray);
         const array = this.state.tileArray;
         const tileId = event.target.id;
         
        const currentIndexOfClickedTile =  array.findIndex(x => x.id === tileId);
-       console.log(currentIndexOfClickedTile);
 //START OF INCORRECT BLOCK
        if(array[currentIndexOfClickedTile].wasClicked){ //User was incorrect
            if(this.state.currentScore >0){ //they have a point to lose, remove a point
@@ -110,7 +95,6 @@ class ClickyGame extends Component {
 
         });        
         }else{ //They won the game
-            console.log("YOU FUCKING WON!");
             const newScore = this.state.currentScore +1;
             if(this.state.highScore < newScore){ //Check if they have a new high score
                 this.setState({
@@ -132,9 +116,9 @@ class ClickyGame extends Component {
             
 
         
-        // this.setState({
-        //     tileArray: this.randomizeArray(this.state.tileArray)
-        // });
+        this.setState({
+            tileArray: this.randomizeArray(this.state.tileArray)
+        });
        
     };
 
